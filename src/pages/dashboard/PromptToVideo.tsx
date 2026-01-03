@@ -20,6 +20,7 @@ import {
   ChevronRight,
   Zap,
   Coins,
+  Cpu,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -31,12 +32,26 @@ const aspectRatios = [
 ];
 
 const stylePresets = [
-  { id: "cinematic", name: "Cinematic", placeholder: "/placeholder.svg" },
-  { id: "anime", name: "Anime", placeholder: "/placeholder.svg" },
-  { id: "realistic", name: "Realistic", placeholder: "/placeholder.svg" },
-  { id: "cartoon", name: "Cartoon", placeholder: "/placeholder.svg" },
-  { id: "abstract", name: "Abstract", placeholder: "/placeholder.svg" },
-  { id: "vintage", name: "Vintage", placeholder: "/placeholder.svg" },
+  { id: "collage", name: "Collage" },
+  { id: "cinematic", name: "Cinematic" },
+  { id: "digital-art", name: "Digital Art" },
+  { id: "neon-futuristic", name: "Neon Futuristic" },
+  { id: "comic-book", name: "Comic Book" },
+  { id: "playground", name: "Playground" },
+  { id: "4k-realistic", name: "4K Realistic" },
+  { id: "cartoon", name: "Cartoon" },
+  { id: "kawaii", name: "Kawaii" },
+  { id: "anime", name: "Anime" },
+  { id: "line-art", name: "Line Art" },
+  { id: "japanese-ink", name: "Japanese Ink" },
+];
+
+const modelOptions = [
+  { id: "veo-2", name: "Veo 2" },
+  { id: "kling-1.5", name: "Kling 1.5" },
+  { id: "runway-gen3", name: "Runway Gen-3" },
+  { id: "pika-labs", name: "Pika Labs" },
+  { id: "sora", name: "Sora" },
 ];
 
 const CREDITS_PER_VIDEO = 50;
@@ -45,6 +60,7 @@ const PromptToVideo = () => {
   const [prompt, setPrompt] = useState("");
   const [selectedRatio, setSelectedRatio] = useState("9:16");
   const [selectedStyle, setSelectedStyle] = useState("cinematic");
+  const [selectedModel, setSelectedModel] = useState("veo-2");
   const [duration, setDuration] = useState([15]);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -99,17 +115,17 @@ const PromptToVideo = () => {
               </CardContent>
             </Card>
 
-            {/* Visual Style Selection */}
+            {/* Visual Style Selection - Grid with colors */}
             <Card className="bg-card border-border">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Palette className="h-5 w-5 text-primary" />
-                  Visual Style
+                  Choose a generation preset
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-                  {stylePresets.map((style, index) => (
+                <div className="grid grid-cols-4 gap-3">
+                  {stylePresets.map((style) => (
                     <button
                       key={style.id}
                       onClick={() => setSelectedStyle(style.id)}
@@ -118,27 +134,29 @@ const PromptToVideo = () => {
                           ? "border-primary ring-2 ring-primary/30"
                           : "border-border hover:border-primary/50"
                       }`}
-                      style={{ animationDelay: `${index * 50}ms` }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-secondary via-muted to-secondary" />
-                      <img
-                        src={style.placeholder}
-                        alt={style.name}
-                        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                      {/* Animated border */}
-                      {selectedStyle === style.id && (
-                        <div className="absolute inset-0 rounded-xl overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary animate-pulse opacity-20" />
-                        </div>
-                      )}
-                      <span className="absolute bottom-1.5 left-0 right-0 text-[10px] font-medium text-foreground text-center">
+                      {/* Gradient background simulating style preview */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${
+                        style.id === 'collage' ? 'from-orange-400 via-amber-300 to-orange-500' :
+                        style.id === 'cinematic' ? 'from-emerald-400 via-teal-300 to-cyan-400' :
+                        style.id === 'digital-art' ? 'from-sky-400 via-cyan-300 to-teal-400' :
+                        style.id === 'neon-futuristic' ? 'from-pink-500 via-purple-500 to-violet-600' :
+                        style.id === 'comic-book' ? 'from-amber-400 via-orange-300 to-yellow-400' :
+                        style.id === 'playground' ? 'from-lime-400 via-green-300 to-emerald-400' :
+                        style.id === '4k-realistic' ? 'from-emerald-400 via-teal-400 to-cyan-500' :
+                        style.id === 'cartoon' ? 'from-rose-400 via-pink-400 to-fuchsia-500' :
+                        style.id === 'kawaii' ? 'from-green-400 via-emerald-300 to-teal-400' :
+                        style.id === 'anime' ? 'from-amber-300 via-yellow-300 to-lime-400' :
+                        style.id === 'line-art' ? 'from-gray-200 via-white to-gray-300' :
+                        'from-red-400 via-rose-300 to-pink-400'
+                      }`} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                      <span className="absolute bottom-1.5 left-0 right-0 text-[10px] font-medium text-foreground text-center drop-shadow-lg">
                         {style.name}
                       </span>
                       {selectedStyle === style.id && (
-                        <div className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-                          <svg className="w-2.5 h-2.5 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-primary border-2 border-primary-foreground flex items-center justify-center">
+                          <svg className="w-3 h-3 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </div>
@@ -158,6 +176,26 @@ const PromptToVideo = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* Model Selection */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <Cpu className="h-4 w-4 text-muted-foreground" />
+                    AI Model
+                  </label>
+                  <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <SelectTrigger className="bg-secondary/30 border-border">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {modelOptions.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          {model.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {/* Aspect Ratio Dropdown */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Aspect Ratio</label>

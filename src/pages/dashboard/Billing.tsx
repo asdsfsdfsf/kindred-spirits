@@ -6,23 +6,69 @@ import {
   Coins,
   Calendar,
   Download,
-  Plus,
   Video,
   Image,
   FileText,
   Clapperboard,
   Repeat,
   Sparkles,
+  Check,
+  Zap,
 } from "lucide-react";
 
-const currentPlan = {
-  name: "Pro",
-  price: "$29",
-  period: "month",
-  credits: 5000,
-  usedCredits: 2550,
-  renewsOn: "January 15, 2024",
-};
+const creditPacks = [
+  {
+    id: "starter",
+    name: "Starter Pack",
+    credits: 1000,
+    price: 9,
+    popular: false,
+    features: [
+      "10 Story Videos",
+      "20 AI Videos",
+      "200 AI Images",
+      "100 Script Generations",
+    ],
+    color: "from-emerald-500/20 to-emerald-500/5",
+    borderColor: "border-emerald-500/30",
+    iconColor: "text-emerald-500",
+  },
+  {
+    id: "pro",
+    name: "Pro Pack",
+    credits: 5000,
+    price: 39,
+    popular: true,
+    features: [
+      "50 Story Videos",
+      "100 AI Videos",
+      "1000 AI Images",
+      "500 Script Generations",
+      "Priority rendering",
+    ],
+    color: "from-primary/20 to-primary/5",
+    borderColor: "border-primary",
+    iconColor: "text-primary",
+  },
+  {
+    id: "studio",
+    name: "Studio Pack",
+    credits: 15000,
+    price: 99,
+    popular: false,
+    features: [
+      "150 Story Videos",
+      "300 AI Videos",
+      "3000 AI Images",
+      "Unlimited Scripts",
+      "Priority rendering",
+      "API access",
+    ],
+    color: "from-violet-500/20 to-violet-500/5",
+    borderColor: "border-violet-500/30",
+    iconColor: "text-violet-500",
+  },
+];
 
 const creditFeatures = [
   {
@@ -76,14 +122,20 @@ const creditFeatures = [
 ];
 
 const invoices = [
-  { id: 1, date: "Dec 15, 2023", amount: "$29.00", status: "Paid", description: "Pro Plan - Monthly" },
-  { id: 2, date: "Nov 15, 2023", amount: "$29.00", status: "Paid", description: "Pro Plan - Monthly" },
-  { id: 3, date: "Nov 5, 2023", amount: "$24.00", status: "Paid", description: "3,000 Credits Pack" },
-  { id: 4, date: "Oct 15, 2023", amount: "$29.00", status: "Paid", description: "Pro Plan - Monthly" },
+  { id: 1, date: "Dec 15, 2023", amount: "$39.00", status: "Paid", description: "Pro Pack - 5,000 Credits" },
+  { id: 2, date: "Nov 15, 2023", amount: "$39.00", status: "Paid", description: "Pro Pack - 5,000 Credits" },
+  { id: 3, date: "Nov 5, 2023", amount: "$9.00", status: "Paid", description: "Starter Pack - 1,000 Credits" },
+  { id: 4, date: "Oct 15, 2023", amount: "$39.00", status: "Paid", description: "Pro Pack - 5,000 Credits" },
 ];
 
+const currentCredits = {
+  available: 2450,
+  total: 5000,
+  renewsOn: "January 15, 2024",
+};
+
 const Billing = () => {
-  const creditPercentage = (currentPlan.usedCredits / currentPlan.credits) * 100;
+  const creditPercentage = ((currentCredits.total - currentCredits.available) / currentCredits.total) * 100;
 
   return (
     <DashboardLayout>
@@ -102,66 +154,90 @@ const Billing = () => {
         </div>
 
         {/* Current Credits */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-primary/20">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Coins className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-medium text-primary">Available Credits</span>
-                  </div>
-                  <h2 className="text-4xl font-bold text-foreground">
-                    {(currentPlan.credits - currentPlan.usedCredits).toLocaleString()}
-                  </h2>
-                  <p className="text-muted-foreground mt-1">
-                    of {currentPlan.credits.toLocaleString()} credits this period
-                  </p>
+        <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-primary/20 mb-8">
+          <CardContent className="p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Coins className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-primary">Available Credits</span>
                 </div>
-                <Button variant="hero" size="sm" className="gap-1">
-                  <Plus className="h-4 w-4" />
-                  Buy Credits
-                </Button>
-              </div>
-              <div className="space-y-2">
-                <div className="h-3 bg-secondary rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500"
-                    style={{ width: `${100 - creditPercentage}%` }}
-                  />
-                </div>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>{currentPlan.usedCredits.toLocaleString()} credits used</span>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    Renews {currentPlan.renewsOn}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-card border-border">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Current Plan</p>
-                  <h2 className="text-2xl font-bold text-foreground">{currentPlan.name}</h2>
-                  <p className="text-muted-foreground">
-                    {currentPlan.price}/{currentPlan.period}
-                  </p>
-                </div>
-                <Button variant="outline" size="sm">
-                  Upgrade Plan
-                </Button>
-              </div>
-              <div className="pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground">
-                  Need more credits? Upgrade your plan or purchase additional credit packs.
+                <h2 className="text-4xl font-bold text-foreground">
+                  {currentCredits.available.toLocaleString()}
+                </h2>
+                <p className="text-muted-foreground mt-1">
+                  of {currentCredits.total.toLocaleString()} credits this period
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="space-y-2">
+              <div className="h-3 bg-secondary rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-500"
+                  style={{ width: `${100 - creditPercentage}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>{(currentCredits.total - currentCredits.available).toLocaleString()} credits used</span>
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  Renews {currentCredits.renewsOn}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Credit Packs */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <Zap className="h-5 w-5 text-primary" />
+            Buy Credits
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {creditPacks.map((pack) => (
+              <Card 
+                key={pack.id}
+                className={`relative bg-gradient-to-br ${pack.color} border-2 ${pack.borderColor} hover:scale-[1.02] transition-all duration-300`}
+              >
+                {pack.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
+                <CardContent className="p-6">
+                  <div className="text-center mb-6">
+                    <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-background/50 ${pack.iconColor} flex items-center justify-center`}>
+                      <Coins className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-lg font-bold text-foreground">{pack.name}</h3>
+                    <div className="mt-2">
+                      <span className="text-3xl font-bold text-foreground">${pack.price}</span>
+                    </div>
+                    <p className={`text-sm font-medium ${pack.iconColor} mt-1`}>
+                      {pack.credits.toLocaleString()} credits
+                    </p>
+                  </div>
+                  <ul className="space-y-2 mb-6">
+                    {pack.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Check className={`h-4 w-4 ${pack.iconColor} flex-shrink-0`} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    variant={pack.popular ? "hero" : "outline"} 
+                    className="w-full"
+                  >
+                    Buy Now
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {/* Credit Usage Guide */}
