@@ -24,6 +24,7 @@ import PromptToVideo from "./pages/dashboard/PromptToVideo";
 import PromptToImage from "./pages/dashboard/PromptToImage";
 import Billing from "./pages/dashboard/Billing";
 import Support from "./pages/dashboard/Support";
+import News from "./pages/dashboard/News";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/dashboard/prompt-to-image" element={<PromptToImage />} />
           <Route path="/dashboard/billing" element={<Billing />} />
           <Route path="/dashboard/support" element={<Support />} />
+          <Route path="/dashboard/news" element={<News />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -23,14 +23,18 @@ import {
 import { useState } from "react";
 
 const stylePresets = [
-  { id: "photorealistic", name: "Photorealistic", placeholder: "/placeholder.svg" },
-  { id: "digital-art", name: "Digital Art", placeholder: "/placeholder.svg" },
-  { id: "anime", name: "Anime", placeholder: "/placeholder.svg" },
-  { id: "oil-painting", name: "Oil Painting", placeholder: "/placeholder.svg" },
-  { id: "3d-render", name: "3D Render", placeholder: "/placeholder.svg" },
-  { id: "watercolor", name: "Watercolor", placeholder: "/placeholder.svg" },
-  { id: "sketch", name: "Sketch", placeholder: "/placeholder.svg" },
-  { id: "comic", name: "Comic", placeholder: "/placeholder.svg" },
+  { id: "collage", name: "Collage" },
+  { id: "cinematic", name: "Cinematic" },
+  { id: "digital-art", name: "Digital Art" },
+  { id: "neon-futuristic", name: "Neon Futuristic" },
+  { id: "comic-book", name: "Comic Book" },
+  { id: "playground", name: "Playground" },
+  { id: "4k-realistic", name: "4K Realistic" },
+  { id: "cartoon", name: "Cartoon" },
+  { id: "kawaii", name: "Kawaii" },
+  { id: "anime", name: "Anime" },
+  { id: "line-art", name: "Line Art" },
+  { id: "japanese-ink", name: "Japanese Ink" },
 ];
 
 const sizeOptions = [
@@ -51,7 +55,7 @@ const CREDITS_PER_IMAGE = 5;
 
 const PromptToImage = () => {
   const [prompt, setPrompt] = useState("");
-  const [selectedStyle, setSelectedStyle] = useState("photorealistic");
+  const [selectedStyle, setSelectedStyle] = useState("4k-realistic");
   const [selectedSize, setSelectedSize] = useState("1:1");
   const [selectedModel, setSelectedModel] = useState("stable-diffusion-xl");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -107,12 +111,12 @@ const PromptToImage = () => {
               </CardContent>
             </Card>
 
-            {/* Art Style Selection */}
+            {/* Art Style Selection - Grid with images */}
             <Card className="bg-card border-border">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Palette className="h-5 w-5 text-accent" />
-                  Art Style
+                  Choose a generation preset
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -121,25 +125,34 @@ const PromptToImage = () => {
                     <button
                       key={style.id}
                       onClick={() => setSelectedStyle(style.id)}
-                      className={`relative rounded-xl overflow-hidden border-2 transition-all duration-300 hover:scale-105 aspect-square ${
+                      className={`relative rounded-xl overflow-hidden border-2 transition-all duration-300 hover:scale-105 aspect-square group ${
                         selectedStyle === style.id
-                          ? "border-accent ring-2 ring-accent/30"
-                          : "border-border hover:border-accent/50"
+                          ? "border-primary ring-2 ring-primary/30"
+                          : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-secondary via-muted to-secondary" />
-                      <img
-                        src={style.placeholder}
-                        alt={style.name}
-                        className="absolute inset-0 w-full h-full object-cover opacity-60"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-                      <span className="absolute bottom-1.5 left-0 right-0 text-[10px] font-medium text-foreground text-center">
+                      {/* Gradient background simulating style preview */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${
+                        style.id === 'collage' ? 'from-orange-400 via-amber-300 to-orange-500' :
+                        style.id === 'cinematic' ? 'from-emerald-400 via-teal-300 to-cyan-400' :
+                        style.id === 'digital-art' ? 'from-sky-400 via-cyan-300 to-teal-400' :
+                        style.id === 'neon-futuristic' ? 'from-pink-500 via-purple-500 to-violet-600' :
+                        style.id === 'comic-book' ? 'from-amber-400 via-orange-300 to-yellow-400' :
+                        style.id === 'playground' ? 'from-lime-400 via-green-300 to-emerald-400' :
+                        style.id === '4k-realistic' ? 'from-emerald-400 via-teal-400 to-cyan-500' :
+                        style.id === 'cartoon' ? 'from-rose-400 via-pink-400 to-fuchsia-500' :
+                        style.id === 'kawaii' ? 'from-green-400 via-emerald-300 to-teal-400' :
+                        style.id === 'anime' ? 'from-amber-300 via-yellow-300 to-lime-400' :
+                        style.id === 'line-art' ? 'from-gray-200 via-white to-gray-300' :
+                        'from-red-400 via-rose-300 to-pink-400'
+                      }`} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                      <span className="absolute bottom-1.5 left-0 right-0 text-[10px] font-medium text-foreground text-center drop-shadow-lg">
                         {style.name}
                       </span>
                       {selectedStyle === style.id && (
-                        <div className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-accent flex items-center justify-center">
-                          <svg className="w-2.5 h-2.5 text-accent-foreground" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-primary border-2 border-primary-foreground flex items-center justify-center">
+                          <svg className="w-3 h-3 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </div>
