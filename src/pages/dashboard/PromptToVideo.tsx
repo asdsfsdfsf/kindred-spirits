@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageSizeSelector } from "@/components/dashboard/ImageSizePreview";
 import {
   Video,
   Sparkles,
@@ -25,10 +26,10 @@ import {
 import { useState } from "react";
 
 const aspectRatios = [
-  { id: "9:16", name: "9:16 (TikTok, Reels)" },
-  { id: "16:9", name: "16:9 (YouTube)" },
-  { id: "1:1", name: "1:1 (Square)" },
-  { id: "4:5", name: "4:5 (Instagram)" },
+  { id: "9:16", name: "TikTok, Reels", description: "9:16" },
+  { id: "16:9", name: "YouTube", description: "16:9" },
+  { id: "1:1", name: "Square", description: "1:1" },
+  { id: "4:5", name: "Instagram", description: "4:5" },
 ];
 
 const stylePresets = [
@@ -196,21 +197,14 @@ const PromptToVideo = () => {
                   </Select>
                 </div>
 
-                {/* Aspect Ratio Dropdown */}
+                {/* Aspect Ratio with Visual Previews */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Aspect Ratio</label>
-                  <Select value={selectedRatio} onValueChange={setSelectedRatio}>
-                    <SelectTrigger className="bg-secondary/30 border-border">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {aspectRatios.map((ratio) => (
-                        <SelectItem key={ratio.id} value={ratio.id}>
-                          {ratio.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <ImageSizeSelector
+                    options={aspectRatios}
+                    value={selectedRatio}
+                    onChange={setSelectedRatio}
+                  />
                 </div>
 
                 {/* Duration */}

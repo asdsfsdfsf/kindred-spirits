@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageSizeSelector } from "@/components/dashboard/ImageSizePreview";
 import {
   Image as ImageIcon,
   Sparkles,
@@ -38,10 +39,10 @@ const stylePresets = [
 ];
 
 const sizeOptions = [
-  { id: "1:1", name: "Square (1024×1024)" },
-  { id: "16:9", name: "Landscape (1920×1080)" },
-  { id: "9:16", name: "Portrait (1080×1920)" },
-  { id: "4:3", name: "Standard (1280×960)" },
+  { id: "1:1", name: "Square", description: "1024×1024" },
+  { id: "16:9", name: "Landscape", description: "1920×1080" },
+  { id: "9:16", name: "Portrait", description: "1080×1920" },
+  { id: "4:3", name: "Standard", description: "1280×960" },
 ];
 
 const modelOptions = [
@@ -164,22 +165,15 @@ const PromptToImage = () => {
             </Card>
 
             {/* Settings Row */}
-            <div className="grid grid-cols-2 gap-4">
-              {/* Size Dropdown */}
+            <div className="space-y-4">
+              {/* Image Size with Visual Previews */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Image Size</label>
-                <Select value={selectedSize} onValueChange={setSelectedSize}>
-                  <SelectTrigger className="bg-secondary/30 border-border">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sizeOptions.map((size) => (
-                      <SelectItem key={size.id} value={size.id}>
-                        {size.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <ImageSizeSelector
+                  options={sizeOptions}
+                  value={selectedSize}
+                  onChange={setSelectedSize}
+                />
               </div>
 
               {/* Model Dropdown */}
