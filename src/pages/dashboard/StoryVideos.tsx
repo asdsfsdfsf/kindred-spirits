@@ -22,10 +22,10 @@ import {
   Coins,
   Cpu,
   Film,
-  Music,
   Palette,
 } from "lucide-react";
 import { useState } from "react";
+import BackgroundMusicSelector from "@/components/dashboard/BackgroundMusicSelector";
 
 const voiceOptions = [
   { id: "male-1", name: "Marcus", preview: "Deep & Professional" },
@@ -61,15 +61,17 @@ const videoTypeOptions = [
   { id: "ai-videos", name: "AI Videos (animated)" },
 ];
 
-const backgroundMusicOptions = [
-  { id: "none", name: "No Music" },
-  { id: "upbeat", name: "Upbeat & Energetic" },
-  { id: "calm", name: "Calm & Relaxing" },
-  { id: "cinematic", name: "Cinematic Epic" },
-  { id: "dramatic", name: "Dramatic & Tense" },
-  { id: "happy", name: "Happy & Cheerful" },
-  { id: "sad", name: "Sad & Emotional" },
-  { id: "mysterious", name: "Mysterious & Suspenseful" },
+const backgroundMusicTracks = [
+  { id: "else-paris", name: "Else - Paris", tags: "Suspense, Epic" },
+  { id: "fur-elise", name: "Für Elise", tags: "Classical, Piano" },
+  { id: "prelude-e-minor", name: "Prelude in E minor (Op. 28 n°4)", tags: "Piano, Classical" },
+  { id: "eureka", name: "Eureka", tags: "Violin, Epic" },
+  { id: "tension", name: "Tension In The Air", tags: "Serious, Dark, Cinematic" },
+  { id: "winter", name: "Winter", tags: "Classical, Epic" },
+  { id: "bladerunner", name: "Bladerunner 2049", tags: "Futuristic, Popular" },
+  { id: "snowfall", name: "Snowfall", tags: "Calm, TikTok, Popular" },
+  { id: "another-love", name: "Another Love", tags: "Romantic, Calm" },
+  { id: "string-arpeggios", name: "String Arpeggios", tags: "Violin, Epic" },
 ];
 
 const CREDITS_PER_VIDEO = 100;
@@ -80,7 +82,7 @@ const StoryVideos = () => {
   const [selectedStyle, setSelectedStyle] = useState("cinematic");
   const [selectedModel, setSelectedModel] = useState("stable-diffusion-xl");
   const [selectedVideoType, setSelectedVideoType] = useState("ai-images");
-  const [selectedMusic, setSelectedMusic] = useState("none");
+  const [selectedMusic, setSelectedMusic] = useState("bladerunner");
   const [isGenerating, setIsGenerating] = useState(false);
   const [playingVoice, setPlayingVoice] = useState<string | null>(null);
 
@@ -252,7 +254,7 @@ const StoryVideos = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* AI Model Selection */}
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground flex items-center gap-2">
@@ -292,27 +294,18 @@ const StoryVideos = () => {
                       </SelectContent>
                     </Select>
                   </div>
-
-                  {/* Background Music Selection */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                      <Music className="h-4 w-4 text-muted-foreground" />
-                      Background Music
-                    </label>
-                    <Select value={selectedMusic} onValueChange={setSelectedMusic}>
-                      <SelectTrigger className="bg-secondary/30 border-border">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {backgroundMusicOptions.map((music) => (
-                          <SelectItem key={music.id} value={music.id}>
-                            {music.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Background Music Selection - Grid Layout */}
+            <Card className="bg-card border-border">
+              <CardContent className="pt-6">
+                <BackgroundMusicSelector
+                  tracks={backgroundMusicTracks}
+                  selectedTrack={selectedMusic}
+                  onSelect={setSelectedMusic}
+                />
               </CardContent>
             </Card>
           </div>

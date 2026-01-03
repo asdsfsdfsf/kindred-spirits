@@ -14,7 +14,6 @@ import {
   Repeat,
   Clapperboard,
   Coins,
-  Bell,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StoryShortLogo from "@/components/StoryShortLogo";
@@ -45,7 +44,6 @@ const DashboardSidebar = () => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const availableCredits = 2450;
-  const unreadCount = 2;
 
   const isActive = (href: string) => location.pathname === href;
 
@@ -56,7 +54,7 @@ const DashboardSidebar = () => {
         collapsed ? "w-16" : "w-64"
       )}
     >
-      {/* Logo & Notification */}
+      {/* Logo */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-border">
         <Link to="/dashboard" className="flex items-center gap-2">
           <StoryShortLogo size={28} />
@@ -64,33 +62,19 @@ const DashboardSidebar = () => {
             <span className="text-lg font-bold text-foreground">StoryShort</span>
           )}
         </Link>
-        <div className="flex items-center gap-1">
-          {/* Notification Badge */}
-          <Link
-            to="/dashboard/news"
-            className="relative p-2 rounded-lg hover:bg-muted transition-colors"
-          >
-            <Bell className="h-4 w-4 text-muted-foreground" />
-            {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold rounded-full flex items-center justify-center">
-                {unreadCount}
-              </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          <ChevronLeft
+            className={cn(
+              "h-4 w-4 transition-transform",
+              collapsed && "rotate-180"
             )}
-          </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            <ChevronLeft
-              className={cn(
-                "h-4 w-4 transition-transform",
-                collapsed && "rotate-180"
-              )}
-            />
-          </Button>
-        </div>
+          />
+        </Button>
       </div>
 
       {/* Main Navigation */}

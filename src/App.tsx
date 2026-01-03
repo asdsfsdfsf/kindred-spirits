@@ -16,6 +16,7 @@ import Refund from "./pages/Refund";
 import Dashboard from "./pages/Dashboard";
 import DashboardSettings from "./pages/DashboardSettings";
 import StoryVideos from "./pages/dashboard/StoryVideos";
+import StoryVideoEditor from "./pages/dashboard/StoryVideoEditor";
 import SeriesAutomation from "./pages/dashboard/SeriesAutomation";
 import Templates from "./pages/dashboard/Templates";
 import Scripts from "./pages/dashboard/Scripts";
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/settings" element={<DashboardSettings />} />
           <Route path="/dashboard/story-videos" element={<StoryVideos />} />
+          <Route path="/dashboard/story-videos/:id/edit" element={<StoryVideoEditor />} />
           <Route path="/dashboard/series" element={<SeriesAutomation />} />
           <Route path="/dashboard/templates" element={<Templates />} />
           <Route path="/dashboard/scripts" element={<Scripts />} />
