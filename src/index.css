@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    --background: 240 15% 6%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
 
-    --card: 240 12% 9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 240 10% 10%;
 
-    --popover: 240 12% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 175 85% 50%;
-    --primary-foreground: 240 15% 6%;
+    --primary: 175 85% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 10% 14%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 5% 92%;
+    --secondary-foreground: 240 10% 10%;
 
-    --muted: 240 8% 18%;
-    --muted-foreground: 215 20% 55%;
+    --muted: 240 5% 94%;
+    --muted-foreground: 240 5% 40%;
 
-    --accent: 270 60% 65%;
-    --accent-foreground: 240 15% 6%;
+    --accent: 270 60% 55%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 8% 18%;
-    --input: 240 8% 18%;
-    --ring: 175 85% 50%;
+    --border: 240 5% 88%;
+    --input: 240 5% 88%;
+    --ring: 175 85% 40%;
 
     --radius: 0.75rem;
 
     /* Custom tokens - Cyan/Teal primary with Violet accent */
-    --brand: 175 85% 50%;
-    --brand-light: 175 90% 65%;
-    --brand-dark: 175 80% 35%;
-    --violet: 270 60% 65%;
-    --violet-light: 270 70% 75%;
-    --surface-elevated: 240 10% 12%;
-    --grid-line: 240 8% 14%;
+    --brand: 175 85% 40%;
+    --brand-light: 175 90% 55%;
+    --brand-dark: 175 80% 30%;
+    --violet: 270 60% 55%;
+    --violet-light: 270 70% 65%;
+    --surface-elevated: 0 0% 96%;
+    --grid-line: 240 5% 90%;
   }
 
   .dark {
@@ -66,6 +66,15 @@
     --border: 240 8% 18%;
     --input: 240 8% 18%;
     --ring: 175 85% 50%;
+
+    /* Custom tokens - Dark mode */
+    --brand: 175 85% 50%;
+    --brand-light: 175 90% 65%;
+    --brand-dark: 175 80% 35%;
+    --violet: 270 60% 65%;
+    --violet-light: 270 70% 75%;
+    --surface-elevated: 240 10% 12%;
+    --grid-line: 240 8% 14%;
   }
 }
 

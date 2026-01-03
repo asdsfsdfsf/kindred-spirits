@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import Pricing from "./pages/Pricing";
 import Blog from "./pages/Blog";
@@ -32,39 +33,41 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/affiliate" element={<Affiliate />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/settings" element={<DashboardSettings />} />
-          <Route path="/dashboard/story-videos" element={<StoryVideos />} />
-          <Route path="/dashboard/story-videos/:id/edit" element={<StoryVideoEditor />} />
-          <Route path="/dashboard/series" element={<SeriesAutomation />} />
-          <Route path="/dashboard/templates" element={<Templates />} />
-          <Route path="/dashboard/scripts" element={<Scripts />} />
-          <Route path="/dashboard/history" element={<History />} />
-          <Route path="/dashboard/prompt-to-video" element={<PromptToVideo />} />
-          <Route path="/dashboard/prompt-to-image" element={<PromptToImage />} />
-          <Route path="/dashboard/billing" element={<Billing />} />
-          <Route path="/dashboard/support" element={<Support />} />
-          <Route path="/dashboard/news" element={<News />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/affiliate" element={<Affiliate />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/settings" element={<DashboardSettings />} />
+            <Route path="/dashboard/story-videos" element={<StoryVideos />} />
+            <Route path="/dashboard/story-videos/:id/edit" element={<StoryVideoEditor />} />
+            <Route path="/dashboard/series" element={<SeriesAutomation />} />
+            <Route path="/dashboard/templates" element={<Templates />} />
+            <Route path="/dashboard/scripts" element={<Scripts />} />
+            <Route path="/dashboard/history" element={<History />} />
+            <Route path="/dashboard/prompt-to-video" element={<PromptToVideo />} />
+            <Route path="/dashboard/prompt-to-image" element={<PromptToImage />} />
+            <Route path="/dashboard/billing" element={<Billing />} />
+            <Route path="/dashboard/support" element={<Support />} />
+            <Route path="/dashboard/news" element={<News />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

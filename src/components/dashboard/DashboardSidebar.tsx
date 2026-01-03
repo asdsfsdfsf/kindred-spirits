@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import StoryShortLogo from "@/components/StoryShortLogo";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useState } from "react";
 
 const mainNavItems = [
@@ -62,19 +63,22 @@ const DashboardSidebar = () => {
             <span className="text-lg font-bold text-foreground">StoryShort</span>
           )}
         </Link>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          <ChevronLeft
-            className={cn(
-              "h-4 w-4 transition-transform",
-              collapsed && "rotate-180"
-            )}
-          />
-        </Button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setCollapsed(!collapsed)}
+          >
+            <ChevronLeft
+              className={cn(
+                "h-4 w-4 transition-transform",
+                collapsed && "rotate-180"
+              )}
+            />
+          </Button>
+        </div>
       </div>
 
       {/* Main Navigation */}
